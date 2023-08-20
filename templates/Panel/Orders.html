@@ -1,0 +1,67 @@
+{% extends 'shared/_Layout.html' %}
+{% load render_partial %}
+{% load static %}
+{% load jalali_tags %}
+{% load poll_extras %}
+
+{% block title %}
+    <title>تغییر اطلاعات</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container mt-lg-5" style="direction: rtl !important;">
+        <div class="row">
+            
+            <div class="col-md-4">
+                {% render_partial 'User_Panel_Modul.views.componnent_list_group' %}
+            </div>  
+
+            <br>
+            <br>
+
+            <div class="col-md-8 mt-5">
+
+                <table class="table table-responsive table-hover table-light">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="text-right">شناسه</th>
+                        <th scope="col" class="text-right">قیمت کل</th>
+                        <th scope="col" class="text-right">کدهگیری</th>
+                        <th scope="col" class="text-right">تاریخ خرید</th>
+                      </tr>
+                    </thead>
+
+
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                          <th scope="row" class="text-right"><a href="{% url 'panel:order_detail' pk=order.id %}">{{order.id}}</a></th>
+                          <td class="text-right">{{order.total_invoice|floatformat:"g"}}</td>
+                          <td class="text-right">{{order.tracking_code}}</td>
+                          <td class="text-right">{{order.payment_date|jalali_date}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+                <nav aria-label="">
+                    <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item" style="margin-left: 10px;"><a class="page-link" href="?page={{page_obj.previous_page_number}}">قبلی</a></li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }} ... {{ page_obj.paginator.num_pages }}</a></li>
+                    {% if page_obj.has_next %}
+                    <li class="page-item" style="margin-right: 10px;"><a class="page-link" href="?page={{page_obj.next_page_number}}">بعدی</a></li>
+                    {% endif %}
+                    </ul>
+                </nav>
+
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+{% endblock %}

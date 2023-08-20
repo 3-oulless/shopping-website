@@ -1,0 +1,44 @@
+{% load static %}
+{% load thumbnail %}
+<div class="col-lg-4 col-md-6">
+    <div class="col-12">
+      <div class="card" style="width: 18rem; border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(96, 96, 96, 0.5);">
+        {% if data.image %}
+          <a href="{{data.get_absolute_url}}"><img src="{{data.image.url}}" class="card-img-top" alt="..." style="border-radius: 15px 15px 0 0 !important;height: 210px;"></a>
+        {% else %}
+          <a href="{{data.get_absolute_url}}"><img src="" class="card-img-top" alt="..." style="border-radius: 15px 15px 0 0 !important;height: 230px;"></a>
+        {% endif %}
+          
+
+
+        <div class="card-body">
+            <p style="font-size: 15px;">{{data.title|title}}</p>
+            
+
+            <div class="row">
+              <div class="col-md-3">
+
+                {% if data.visit_count == None %}
+                  <i class='bx bx-show-alt'><span>  </span> 0 </i>
+
+                {% else %}
+                  <i class='bx bx-show-alt'><span>  </span> {{data.visit_count}} </i>
+                {% endif %}
+            
+              </div>
+              <div class="col-md-9">
+                <h2 style="font-size: medium;">{{data.price|floatformat:"g"}} تومان</h2>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>افزودن به سبـد خریـد</a>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+    <br>                    
+</div>
+
+
+        

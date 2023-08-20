@@ -1,0 +1,79 @@
+<div class="col-sm-3">
+    <div class="left-sidebar">
+
+    
+
+        <h2>دسته بندی محصولات</h2>
+        <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+            
+            {% for product_category in product_categorys %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {% if product_category.parents.all  %} 
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordian" href="#{{product_category.url_title}}">
+                                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                    <a href="{{product_category.get_absolute_url}}">{{product_category.title_fa}}</a>
+                                </a>
+                            </h4>
+                        {% else %}
+                            <h4 class="panel-title">
+                                <a href="{{product_category.get_absolute_url}}">
+                                    {{product_category.title_fa}}
+                                </a>
+                            </h4>
+                        {% endif %}
+                    </div>
+                    
+                    {% if product_category.parents.all %}
+                        <div id="{{product_category.url_title}}" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                
+                                <ul>
+                                    {% for item in product_category.parents.all %}
+                                    
+                                        <li><a href="{{item.get_absolute_url}}">{{item.title_fa}}</a></li>
+                                
+                                    {% endfor %}
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            
+        </div>
+
+
+
+
+
+
+
+
+        <div class="brands_products"><!--brands_products-->
+            <h2>برنـد ها</h2>
+            <div class="brands-name">
+                <ul class="nav nav-pills nav-stacked">
+                    {% for data in brand %}
+                        <li><a href="{{data.get_absolute_url}}"> <span class="pull-left">{{data.product_count}}</span>{{data.title}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div><!--/brands_products-->
+        
+        <div class="price-range"><!--price-range-->
+            <h2>فیلتـر قیمـت</h2>
+            <div class="well">
+                 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
+                 <b>1.000.000 ريال</b> <b class="pull-left">0 ريال</b>
+            </div>
+        </div><!--/price-range-->
+
+        
+    </div>
+</div>
+
+

@@ -1,0 +1,83 @@
+{% extends 'shared/_Layout.html' %}
+{% load static %}
+
+{% block title %}
+    <title>درباره ی ما</title>
+{% endblock %}
+
+
+{% block content %}
+<section id="about" class="about">
+    <div class="container" style="direction: rtl !important;">
+
+      <div>
+        <h2>درباره ما</h2>
+        <hr style="color: aqua;" class="w-25">
+        <p>...</p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 aos-init aos-animate" data-aos="fade-right">
+          <img src="{{data_site.site_logo.url}}" class="img-fluid" alt="">
+        </div>
+        <div class="col-lg-8 pt-4 pt-lg-0 content aos-init aos-animate" data-aos="fade-left">
+          <div class="row">
+            <div class="col-lg-6">
+              <ul>
+                <li><i class="bi bi-chevron-double-left"></i> <strong>نام سایت : </strong> <span>{{data_site.site_name}}</span></li>
+                <li><i class="bi bi-chevron-double-left"></i> <strong>دامنه سایت : </strong> <span><a href="{{data_site.sitr_url}}">{{data_site.sitr_url}}</a></span></li>
+                <li><i class="bi bi-chevron-double-left"></i> <strong>آدرس : </strong> <span>{{data_site.address}}</span></li>
+                <li><i class="bi bi-chevron-double-left"></i> <strong>تلفن : </strong> <span>{{data_site.phone}}</span></li>
+              </ul>
+            </div>
+            <div class="col-lg-6">
+              <ul>
+                <li><i class="bi bi-chevron-double-left"></i> <strong>فکس : </strong> <span>{{data_site.fax}}</span></li>
+                <li><i class="bi bi-chevron-double-left"></i> <strong>ایمیـل : </strong> <span>{{data_site.email}}</span></li>
+                <li><i class="bi bi-chevron-double-left"></i> <strong>سال تاسیس : </strong> <span>1380</span></li>
+                
+                {% if social_network %}
+                    <li><i class="bi bi-chevron-double-left"></i><strong><span> </span>فضای مجازی </strong>
+                        {% for data in social_network %}
+                            : <span><p><a href="{{data.social_network_url}}" style="padding-left: 10px !important;">{{data.social_network_name}}</a></p></span>
+                        {% endfor %}
+                    </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+          <p>
+            {{data_site.about_us_text}}
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+    {% if employees %}
+        <div class="container" style="direction: rtl !important;">
+
+            <div>
+                <h2>کارمندان</h2>
+                <hr style="color: aqua;" class="w-25">
+            </div>
+
+            <div class="row">
+                {% for data in employees %}
+                    {% include 'include/employee_item_component.html' with data=data %}
+                {% endfor %}
+
+            </div>
+            
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+ 

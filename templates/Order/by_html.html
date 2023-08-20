@@ -1,0 +1,87 @@
+{% extends 'shared/_Layout.html' %}
+{% load render_partial %}
+{% load static %}
+{% load thumbnail %}
+{% load jalali_tags %}
+{% load poll_extras %}
+
+{% block title %}
+    <title>پرداخت</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container" style="direction: rtl !important;">
+        <div class="row ">
+            <div class="col-lg-12">
+                <div class="row" style="margin-top: 150px !important;justify-content: center !important;">
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <form action="{% url 'order:by_page' %}" method="post">
+                                {% csrf_token %}
+        
+                                <div class="col-lg-12">
+                                    <div class="form-group {% if form.errors %} text-danger {% endif %}">
+                                        {{form.cart_number}}
+                                        {{form.errors.cart_number}}
+                                    </div>
+                                </div>
+        
+                                <br>
+        
+                                <div class="col-lg-12">
+                                    <div class="form-group {% if form.errors %} text-danger {% endif %}">
+                
+                                        {{form.cart_password}}
+                                        {{form.errors.cart_password}}
+                                        
+                                    </div>
+                                </div>
+        
+                                <br>
+        
+                                
+                                <div class="col-lg-12">
+                                    <button class="btn btn-success form-control" type="submit">پرداخت</button>
+                                    <br>
+                                </div>
+        
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
+
+    </div>
+{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Modal Example</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+  <!-- Modal -->
+  
+  </div>
+  
+</div>
+
+</body>
+</html>

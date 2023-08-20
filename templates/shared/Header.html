@@ -1,0 +1,61 @@
+{% load thumbnail %}
+
+
+
+<!-- ======= Header ======= -->
+<header id="header">
+  <div class="d-flex flex-column">
+
+    <div class="profile">
+      {% thumbnail data.site_logo "700x700" quality=100 as im %}
+        <img src="{{im.url}}" width="50px" height="120px" alt="" style="border-radius: 50% !important;">
+      {% endthumbnail %}
+
+      <h1 class="text-light"><a href="{{data.sitr_url}}">{{data.site_name}}</a></h1>
+      
+      {% if request.user.is_authenticated %}
+        <br>
+        <div style="text-align: center !important; align-items: center !important;">
+          <div class="dropdown">
+            <li class=" dropdown-toggle" style="color: white;" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+              {{request.user.username}}
+            </li>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <li><button class="dropdown-item" type="button"><a href="{% url 'panel:user_panel' %}">حساب کاربری</a></button></li>
+              <li><button class="dropdown-item" type="button"><a href="{% url 'account_modul:logout' %}">خروج</a></button></li>
+            </ul>
+          </div>
+        </div>
+        <br>
+      {% endif %}
+
+
+      <div class="social-links mt-3 text-center">
+        {% for social_links in social_network %}
+          <a href="{{social_links.social_network_url}}" class="twitter"><i class="bx bxl-meta"></i></a>
+          <span style="font-size: 10px; color: cornsilk;">{{social_links.social_network_name}}</span>
+        {% endfor %}
+      </div>
+
+    </div>
+
+    <nav id="navbar" class="nav-menu navbar">
+      <ul>
+        <li><a href="{% url 'home_modul:home' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'home' %} active {% endif %}"><i class="bx bx-home"></i> <span>Home</span></a></li>
+        <li><a href="{% url 'products:Product_List' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'Product_List' %} active {% endif %}"><i class='bx bx-search-alt'></i> <span>لنز</span></a></li>
+        <li><a href="{% url 'products:Product_List' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'Product_List' %} active {% endif %}"><i class='bx bx-glasses'></i> <span>فریم</span></a></li>
+        <li><a href="{% url 'article:articles' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'articles' %} active {% endif %}"><i class='bx bxs-file-txt'></i> <span>مقالات</span></a></li>
+
+        {% if not request.user.is_authenticated %}
+          <li><a href="{% url 'account_modul:login' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'login' %} active {% endif %}"><i class='bx bx-log-in-circle'></i> <span>ورود</span></a></li>
+          <li><a href="{% url 'account_modul:register' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'register' %} active {% endif %}"><i class='bx bxs-check-shield'></i> <span>ثبت نام</span></a></li>
+        {% else %}
+       
+          <li><a href="{% url 'order:show_order' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'show_order' %} active {% endif %}"> <i class='bx bx-cart'></i> <span>سبد خرید</span></a></li>
+          <li><a href="{% url 'about_us:about_us' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'about_us' %} active {% endif %}"><i class='bx bxs-medal'></i> <span>درباره ما</span></a></li>
+          <li><a href="{% url 'contact-us:contact_us' %}" class="nav-link scrollto {% if request.resolver_match.url_name == 'contact_us' %} active {% endif %}"><i class='bx bxs-message-rounded'></i> <span>ارتباط با ما</span></a></li>
+        {% endif %}
+      </ul>
+    </nav><!-- .nav-menu -->
+  </div>
+</header>

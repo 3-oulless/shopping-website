@@ -1,0 +1,213 @@
+{% extends 'shared/_Layout.html' %}
+{% load static %}
+
+{% block title %}
+    <title>ارتباط با ما</title>
+{% endblock %}
+
+
+{% block content %}
+<section id="contact" class="contact">
+    <div class="container">
+
+      <div class="row">
+        {% for banner in banners %}
+          <div class="col-lg-12 ">
+            <div class="row">
+
+              <div class="col-md-8" style="direction: rtl;">
+                <h5>{{banner.title}}</h5>
+                <p>{{banner.description}}</p>
+              </div>
+
+              <div class="col-md-4 d-flex justify-content-center">
+                <a href="{{banner.url}}" target="_blank">
+                  <img src="{{banner.image.url}}" width="200px" alt="">
+                </a>
+              </div>
+
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <br>
+      <br>
+
+      <div class="" style="direction: rtl !important;">
+        <h2>ارتباط با ما</h2>
+        <p>برای بهبود سایت میتوانید در این قسمت نظرات خود را ارسال کنید</p>
+      </div>
+      <br>
+
+      <div class="row aos-init aos-animate"  data-aos="fade-in">
+
+        <div class="col-lg-5 d-flex align-items-stretch">
+          <div class="info">
+
+            <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>{{data_site.address}}</p>
+              </div>
+      
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>{{data_site.email}}</p>
+              </div>
+      
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>{{data_site.phone}}</p>
+              </div>
+      
+              {% if social_network %}
+                    <div class="phone">
+                        <i class="bx bxl-meta"></i>
+                        <h4>Social Networks :</h4>
+                        {% for data in social_network %}
+                            <a href="{{data.social_network_url}}">
+                                <a href="{{data.social_network_url}}" style="padding-left: 10px !important;">{{data.social_network_name}}</a>
+                            </a>
+                        {% endfor %}
+                    </div>
+              {% endif %}
+
+            
+          </div>
+
+        </div>
+
+        <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch" style="direction: rtl !important;" >
+          <form method="post" role="form" class="php-email-form">
+            {% csrf_token %}
+            <div class="row">
+
+            <div class="form-group col-md-6">
+                {{form.full_name.label_tag}}
+                {{form.full_name}}
+                {{form.errors.full_name}}
+            </div>
+
+            <div class="form-group col-md-6">
+                {{form.email.label_tag}}
+                {{form.email}}
+            </div>
+
+            </div>
+
+            <div class="form-group">
+                {{form.title.label_tag}}
+                {{form.title}}
+            </div>
+
+            <div class="form-group">
+                {{form.message.label_tag}}
+                {{form.message}}
+            </div>
+
+
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center alert-primary"><button type="submit">Send Message</button></div>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+{% endblock %}
+
+
+
+
+
+
+  <div class="row aos-init container" id="contact-page" style="align-items: center !important;">
+
+    <div class="col-lg-4 col-md-6">
+      <div class="info">
+        <div class="address">
+          <i class="bi bi-geo-alt"></i>
+          <h4>Location:</h4>
+          <p>{{data_site.address}}</p>
+        </div>
+
+        <div class="email">
+          <i class="bi bi-envelope"></i>
+          <h4>Email:</h4>
+          <p>{{data_site.email}}</p>
+        </div>
+
+        <div class="phone">
+          <i class="bi bi-phone"></i>
+          <h4>Call:</h4>
+          <p>{{data_site.phone}}</p>
+        </div>
+
+        {% if social_network %}
+            <div class="social-networks">
+                <h2 class="title text-center">شبکـه های اجتـماعی</h2>
+                <span  class="socials-share share">
+                        <ul>
+                                        
+                            {% for data in social_network %}
+                                <a href="{{data.social_network_url}}">
+                                    <li>
+                                        {{data.social_network_name}}
+                                    </li>
+                                </a>
+                            {% endfor %}
+                                        
+                        </ul>
+                    </span>
+            </div>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <div class="col-lg-4 col-md-6" >
+      <form method="post" role="form">
+        {% csrf_token %}
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            {{form.full_name.label_tag}}
+            {{form.full_name}}
+            {{form.errors.full_name}}
+          </div>
+
+          <div class="form-group col-md-6">
+            {{form.email.label_tag}}
+            {{form.email}}
+          </div>
+
+        </div>
+
+        <div class="form-group">
+            {{form.title.label_tag}}
+            {{form.title}}
+        </div>
+
+        <div class="form-group">
+            {{form.message.label_tag}}
+            {{form.message}}
+        </div>
+
+        <div class="my-3">
+          <div class="loading">Loading</div>
+          <div class="error-message"></div>
+          <div class="sent-message">Your message has been sent. Thank you!</div>
+        </div>
+        <div class="text-center"><button type="submit">Send Message</button></div>
+      </form>
+    </div>
+
+</div>

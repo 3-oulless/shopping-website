@@ -1,0 +1,79 @@
+
+<!-- <div class="panel-group category-products" id="accordian">
+    
+    {% for article_category in article_categorys %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {% if article_category.parents.all  %} 
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#{{article_category.url_title}}">
+                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                            <a href="{% url 'article:articles_category' category=article_category.url_title %}">{{article_category.title}}</a>
+                        </a>
+                    </h4>
+                {% else %}
+                    <h4 class="panel-title">
+                        <a href="{% url 'article:articles_category' category=article_category.url_title %}">
+                            {{article_category.title}}
+                        </a>
+                    </h4>
+                {% endif %}
+            </div>
+            
+            {% if article_category.parents.all %}
+                <div id="{{article_category.url_title}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        
+                        <ul>
+                            {% for item in article_category.parents.all %}
+                            
+                                <li><a href="{% url 'article:articles_category' category=item.url_title %}">{{item.title}}</a></li>
+                        
+                            {% endfor %}
+                        </ul>
+                        
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    
+</div> -->
+
+
+<div class="col-lg-12 d-flex justify-content-center">
+    <ul id="portfolio-flters">
+        {% for article_category in article_categorys %}
+            {% if article_category.parents.all  %}
+                <a data-toggle="collapse" data-parent="#accordian" href="#{{article_category.url_title}}">
+                    <span class="pull-left"><i class="bx bx-plus"></i></span>
+                    <a href="{% url 'article:articles_category' category=article_category.url_title %}">{{article_category.title}}</a>
+                </a>
+            {% else %}
+                <a href="{% url 'article:articles_category' category=article_category.url_title %}">
+                    {{article_category.title}}
+                </a>
+            {% endif %}
+
+
+
+            {% if article_category.parents.all %}
+                <div id="{{article_category.url_title}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        
+                        <ul>
+                            {% for item in article_category.parents.all %}
+                            
+                                <li><a href="{% url 'article:articles_category' category=item.url_title %}">{{item.title}}</a></li>
+                        
+                            {% endfor %}
+                        </ul>
+                        
+                    </div>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+    </ul>
+</div>

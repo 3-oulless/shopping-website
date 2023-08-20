@@ -1,0 +1,57 @@
+{% extends 'shared/_Layout.html' %}
+{% load render_partial %}
+{% load static %}
+{% load jalali_tags %}
+{% load poll_extras %}
+
+{% block title %}
+    <title>تغییر اطلاعات</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container mt-lg-5" style="direction: rtl !important;">
+        <div class="row">
+            
+            <div class="col-md-4">
+                {% render_partial 'User_Panel_Modul.views.componnent_list_group' %}
+            </div>  
+
+            <br>
+            <br>
+
+            <div class="col-md-8 mt-5">
+
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">تصویر</th>
+                        <th scope="col">محصول</th>
+                        <th scope="col">قیمت</th>
+                        <th scope="col">تعداد</th>
+                        <th scope="col">قیمت کل</th>
+                      </tr>
+                    </thead>
+
+
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                          <th>
+                            <img src="{{order.product.image.url}}" width="60px" height="60px" alt="" style="border-radius: 50%;">
+                          </th>
+                          <td>{{order.product.title}}</td>
+                          <td>{{order.product.price|floatformat:"g"}}</td>
+                          <td>{{order.count}}</td>
+                          <td>{{order.final_price|floatformat:"g"}}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+{% endblock %}

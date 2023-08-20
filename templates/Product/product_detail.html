@@ -1,0 +1,278 @@
+{% extends 'shared/_Layout.html' %}
+{% load render_partial %}
+{% load static %}
+{% load thumbnail %}
+{% load jalali_tags %}
+{% load poll_extras %}
+
+{% block title %}
+    <title>لیست محصولات</title>
+{% endblock %}
+
+
+{% block content %}
+   <div class="container">
+      <div >
+         <div class="row">
+         <div class="col-lg-12 container row" > 
+            <div class="col-md-4">
+               
+                {% if data.image %}
+                    <img src="{{data.image.url}}" class="d-block w-100 im" alt="..." id="main_image">
+                {% else %}
+                    <img src="" class="d-block w-100 im" alt="..." id="main_image">
+                {% endif %}
+               <div id="carouselExampleIndicators" class="carousel slide">
+                <div class="carousel-inner">
+                  <div class="row">
+                    <div class="col-md-12">
+
+                       {% for group in product_galleries_group %}
+                        <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                            
+                            {% for gallery in group %}
+                                
+                                <img onclick="shoLargeImage('{{gallery.image.url}}')" src="{{gallery.image.url}}" class="" width="120" height="120" alt="...">
+                                
+                            {% endfor %}
+
+                        </div>
+                       {% endfor %}
+
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+
+            </div>
+
+            <div class="col-md-4" style="direction: rtl;">
+               <div class="card-body">
+                  
+               </div>
+            </div>
+
+            <div class="col-md-4" style="direction: rtl;padding-top: 10px;">
+               <div class="card-body">
+                  <p><span><b>عنوان : </b></span>{{data.title}}</p>
+                  <p><span><b>برند : </b></span><a href="{{data.brand.get_absolute_url}}">{{data.brand}}</a></p>
+                  <p><span><b>برچسب ها : </b></span>
+                     {% for i in data.category.all %}
+                        <a href="{{i.get_absolute_url}}">{{i.title_fa}}</a>,
+                     {% endfor %}
+                  </p>
+
+
+                  <p><span>قیمت : </span><b>{{data.price|floatformat:"g"}}</b></p>
+                  <p><span><b>توضیحات کوتاه : </b></span>{{data.short_description}}</p>
+                  <p><span><b>تعداد موجودی : </b></span>{{data.count}}</p>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3 col-lg-3">
+                                    <input  class="w-100" type="number" value="1" min="1" id="product_count" max="{{data.count}}">
+                                </div>
+
+                                <div class="col-md-9">
+                                    <button class="btn btn-primary" onclick="AddProductToOrder({{data.id}})">افزودن به سبد خرید</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+         </div>
+      </div>
+      <br>
+
+      
+      <div class="card-body" style="direction: rtl;">
+         <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+            <li class="nav-item flex-fill active" role="presentation"> <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">مشخصات</button></li>
+            <li class="nav-item flex-fill" role="presentation"> <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">نظرات ({{comments.count}})</button></li>
+         </ul>
+         <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+
+         <div class="tab-pane fade" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab"> 
+            <ul>
+                  <li><h5 class="card-text text-secondary fs-5">{{data.description | safe}}<span class="text-dark fs-6"></span></h5></li>
+            </ul>
+         </div>
+
+
+
+         <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="contact-tab"> 
+            <br>
+            <div class="row">
+               <div class="col-lg-12">
+                   {% for comment in comments %}
+                       <ul class="media-list" id="comment">
+                           <div class="row" style="border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(96, 96, 96, 0.5);">
+                               <div class="col-lg-10">
+                                   <br>
+                                   <div class="media">
+                                       <a class="pull-right" href="">  
+                                           {% if comment.user.avatar %}
+                                               {% thumbnail comment.user.avatar "60x60" quality=100 crop="center" as im %}
+                                                   <img class="media-object" style="border-radius: 50%;" src="{{ im.url }}">
+                                               {% endthumbnail %}
+                                           {% else %}
+                                               <img class="media-object" src="{% static 'images/User/user.png' %}" alt="">
+                                           {% endif %}
+                                       </a> 
+           
+                                       <div class="media-body">
+                                           <p><i class="bx bx-user " style="color: rgb(127, 228, 206);"></i>{{comment.user}}<span>  </span><i class="bx bx-calendar" style="color: rgb(127, 228, 206);"></i> {{ comment.create_date|jalali_date}}<span>  </span><i class="bx bx-alarm" style="color: rgb(127, 228, 206);"></i>{{ comment.create_date|to_jalali:'%H:%M:%S'}}</p>
+                                           <p>{{comment.text}} <span>  </span></p>
+                                           
+                                           
+                                       </div>
+           
+                                       <br>
+                                   </div>
+                               </div>
+   
+                               <div class="col-lg-2" style="text-align: center !important;align-items: center !important; margin-top: 60px !important;margin-bottom: 10 px !important;">
+                                   <button class="btn btn-primary" style="border-radius: 150px; margin-right: 50px; margin-bottom: 10px;" onclick="answers({{comment.id}})"><i class="bx bx-reply"></i>پاسـخ</button>
+                               </div>
+
+
+                               <br>
+
+
+                           {% for com in comment.product_parent.all %}
+                                       
+                               <div style="padding-right: 60px; border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(48, 48, 48, 0.5);">
+                                   <div class="media second-media">
+                                       <a class="pull-right" href="">  
+                                          <br>
+                                           {% if com.user.avatar %}
+                                               {% thumbnail com.user.avatar "60x60" quality=100 crop="center" as im %}
+                                                   <img class="media-object" style="border-radius: 50%;" src="{{ im.url }}">
+                                               {% endthumbnail %}
+                                           {% else %}
+                                               <img class="media-object" src="{% static 'images/User/user.png' %}" alt="">
+                                           {% endif %}
+                                       </a> 
+                                       <div class="media-body">
+                                           <p><i class="bx bx-user " style="color: rgb(225, 127, 228);"></i>{{com.user}}<span>  </span><i class="bx bx-calendar" style="color: rgb(225, 127, 228);"></i> {{ com.create_date|jalali_date}}<span>  </span><i class="bx bx-alarm" style="color: rgb(225, 127, 228);"></i>{{ com.create_date|to_jalali:'%H:%M:%S'}}</p>
+                                           <p>{{com.text}}</p>
+                                       </div>
+                                   </div>
+                                   <br>
+                               </div>    
+
+                           {% endfor %}
+
+                           </div>
+                           
+                           
+                           
+
+                       </ul>	
+                   {% endfor %}
+               </div>
+               
+           </div>
+           
+           {% if request.user.is_authenticated %}
+                        
+            <div class="col-lg-7 ">
+                <div style="text-align: center !important; align-items: center !important;">
+                    
+                </div>
+
+            </div>    
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="post">
+                        {% csrf_token %}
+                                        
+                                
+                        <input type="hidden" name="user"  value="{{request.user.pk}}">
+                        <input type="hidden" id="parent_id" name="parentid" value="">
+                                    
+                        <div class="row">
+                            <div class="form-group text-area col-md-10">
+                                <div class="blank-arrow" id="answer_comment">
+                                    <label>متن پیام</label> 
+                                </div>
+                                <textarea name="message" id="mes" rows="4" class="w-100"></textarea>
+                            </div>
+
+                            <div class="col-md-2" style="text-align: center !important;align-items: center !important; margin-top: 50px !important;">
+                                <button class="btn btn-primary" onclick="send_comment()">ارسال نظر</button>
+                            </div>
+                        </div>
+                                    
+                        
+                       
+                        
+                    </form>
+                </div>
+            </div>
+            <br>
+
+        {% else %}
+            <div class="alert alert-warning">
+                برای درج نظـر خود میبایست <a href="{% url 'account_modul:login' %}">لاگین</a> کنید
+            </div>
+        {% endif %}
+         </div>
+
+      </div>
+      <script>
+        function send_comment(){
+            document.getElementById('comment').scrollIntoView({behavior:"smooth"});
+        }
+
+        function answers(parentId){
+            document.getElementById('parent_id').value = parentId
+            document.getElementById('answer_comment').scrollIntoView({behavior:"smooth"});
+
+        }
+
+        function shoLargeImage(imageSrc){
+            console.log(imageSrc)
+            var a = document.getElementById('main_image')
+            a.src = imageSrc
+        }
+
+        function AddProductToOrder(productId){
+            const ProductCount = $('#product_count').val()
+            $.get('/order/add-to-order?product_id=' + productId + '&count=' + ProductCount).then(res => {
+                Swal.fire({
+                    title: res.title,
+                    text: res.text,
+                    icon: res.icon,
+                    showCancelButton: false,
+                    confirmButtonColor: res.confirmButtonColor,
+                    confirmButtonText: res.confirmButtonText
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                       if (res.status == 'not_auth'){
+                        window.location.href = '/auth/login'
+                       }
+                    }
+                    })
+                })
+            }
+
+      </script>
+   </div>
+
+{% endblock %}
+

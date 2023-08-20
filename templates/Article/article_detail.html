@@ -1,0 +1,232 @@
+{% extends 'shared/_Layout.html' %}
+{% load static %}
+{% load jalali_tags %}
+{% load poll_extras %}
+{% load thumbnail %}
+
+
+
+{% block title %}
+    <title>{{Articles.title}}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="direction: rtl !important;">
+        <div class="row">
+            <div class="col-lg-12 col-md-12" style="margin-top: 15px;">
+                <div class="col-12">
+                    <div class="card" style="border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(96, 96, 96, 0.5);">
+                        {% if Articles.image %}
+                        
+                            {% thumbnail Articles.image "862x398" quality=100 crop="center" as im %}
+                                <img src="{{im.url}}" class="card-img-top" alt="..." style="border-radius: 15px 15px 0 0 !important;height: 450px;">
+                            {% endthumbnail %}
+                        {% else %}
+                            <img src="" class="card-img-top" alt="..." style="border-radius: 15px 15px 0 0 !important;height: 450px;">
+                        {% endif %}
+                        
+            
+            
+                        <div class="card-body">
+                            <h3>{{Articles.title}}</h3>
+                                
+                            <p><i class="bx bx-user " style="color: chocolate;"></i>{{Articles.author}}<span>  </span><i class="bx bx-calendar" style="color: chocolate;"></i> {{ Articles.date_create|jalali_date}}<span>  </span><i class="bx bx-alarm" style="color: chocolate;"></i>{{ Articles.date_create|to_jalali:'%H:%M:%S'}}</p>
+            
+                            <p>{{Articles.short_description}}</p>
+                            <p>{{Articles.text}}</p>
+
+                            <div class="rating-area">
+                                برچسب :
+                                    
+                                    {% for item in Articles.selected_categories.all %}
+                                        <a class="color" href="{% url 'article:articles_category' category=item.url_title %}">{{item.title}}<span>/</span></a>
+                                    {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>                    
+            </div>
+
+            <div class="col-lg-12">
+
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        {% thumbnail Articles.author.avatar "100x100" quality=100 crop="center" as im %}
+                            <img class="pull-right" style="border-radius: 50%;" src="{{ im.url }}">
+                        {% endthumbnail %}
+                    </div>
+
+                    <div class="col-lg-10">
+                        <div class="media-body">
+                            <h4 class="media-heading">{{Articles.author.first_name}} <span>{{Article.author.last_name}}</span></h4>
+                            <p>{{Articles.author.about_user}}</p>
+                            <div class="blog-socials" style="text-align: center !important;align-items: center !important;">
+                                {% if Articles.author.instagram_account %}
+                                    <a href="//{{Articles.author.instagram_account}}"><i class="bx bxl-instagram"></i></a>
+                                {% endif %}
+    
+                                {% if Articles.author.twitter_account %}
+                                    <a href="//{{Articles.author.twitter_account}}"><i class="bx bxl-twitter"></i></a>
+                                {% endif %}
+    
+                                {% if Articles.author.facbook_account %}
+                                    <a href="//{{Articles.author.facbook_account}}"><i class="bx bxl-facebook"></i></a>
+                                {% endif %}
+    
+                                {% if Articles.author.linkedin_account %}
+                                    <a href="//{{Articles.author.linkedin_account}}"><i class="bx bxl-linkedin"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <div>
+            <h2> نطرات  ({{comments.count}})</h2>
+            <hr style="color: aqua;" class="w-25">
+        </div>
+
+        <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    {% for comment in comments %}
+                        <ul class="media-list" id="comment">
+                            <div class="row" style="border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(96, 96, 96, 0.5);">
+                                <div class="col-lg-10">
+                                    <br>
+                                    <div class="media">
+                                        <a class="pull-right" href="">  
+                                            {% if comment.user.avatar %}
+                                                {% thumbnail comment.user.avatar "60x60" quality=100 crop="center" as im %}
+                                                    <img class="media-object" style="border-radius: 50%;" src="{{ im.url }}">
+                                                {% endthumbnail %}
+                                            {% else %}
+                                                <img class="media-object" src="{% static 'images/User/user.png' %}" alt="">
+                                            {% endif %}
+                                        </a> 
+            
+                                        <div class="media-body">
+                                            <p><i class="bx bx-user " style="color: rgb(127, 228, 206);"></i>{{comment.user}}<span>  </span><i class="bx bx-calendar" style="color: rgb(127, 228, 206);"></i> {{ comment.create_date|jalali_date}}<span>  </span><i class="bx bx-alarm" style="color: rgb(127, 228, 206);"></i>{{ comment.create_date|to_jalali:'%H:%M:%S'}}</p>
+                                            <p>{{comment.text}} <span>  </span></p>
+                                            
+                                            
+                                        </div>
+            
+                                        <br>
+                                    </div>
+                                </div>
+    
+                                <div class="col-lg-2" style="text-align: center !important;align-items: center !important; margin-top: 60px !important;margin-bottom: 10 px !important;">
+                                    <button class="btn btn-primary" style="border-radius: 150px; margin-right: 50px; margin-bottom: 10px;" onclick="answers({{comment.id}})"><i class="bx bx-reply"></i>پاسـخ</button>
+                                </div>
+
+                                <br>
+
+
+                            {% for com in comment.article_parent.all %}
+                                        
+                                <div style="padding-right: 60px; border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(48, 48, 48, 0.5);">
+                                    <div class="media second-media">
+                                        <a class="pull-right" href=""> 
+                                            <br> 
+                                            {% if com.user.avatar %}
+                                                {% thumbnail com.user.avatar "60x60" quality=100 crop="center" as im %}
+                                                    <img class="media-object" style="border-radius: 50%;" src="{{ im.url }}">
+                                                {% endthumbnail %}
+                                            {% else %}
+                                                <img class="media-object" src="{% static 'images/User/user.png' %}" alt="">
+                                            {% endif %}
+                                        </a> 
+                                        <div class="media-body">
+                                            <p><i class="bx bx-user " style="color: rgb(225, 127, 228);"></i>{{com.user}}<span>  </span><i class="bx bx-calendar" style="color: rgb(225, 127, 228);"></i> {{ com.create_date|jalali_date}}<span>  </span><i class="bx bx-alarm" style="color: rgb(225, 127, 228);"></i>{{ com.create_date|to_jalali:'%H:%M:%S'}}</p>
+                                            <p>{{com.text}}</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>    
+
+                            {% endfor %}
+
+                            </div>
+                            
+                            
+                            
+
+                        </ul>	
+                    {% endfor %}
+                </div>
+                
+            </div>
+        <br>
+
+        {% if request.user.is_authenticated %}
+                        
+            <div class="col-lg-7 ">
+                <div style="text-align: center !important; align-items: center !important;">
+                    
+                </div>
+
+            </div>    
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <form method="post">
+                        {% csrf_token %}
+                                        
+                                
+                        <input type="hidden" name="user"  value="{{request.user.pk}}">
+                        <input type="hidden" name="article_id" value="{{Articles.pk}}">
+                        <input type="hidden" id="parent_id" name="parentid" value="">
+                                    
+                        <div class="row">
+                            <div class="form-group text-area col-md-10">
+                                <div class="blank-arrow" id="answer_comment">
+                                    <label>متن پیام</label> 
+                                </div>
+                                <textarea name="message" id="mes" rows="4" class="w-100"></textarea>
+                            </div>
+
+                            <div class="col-md-2" style="text-align: center !important;align-items: center !important; margin-top: 50px !important;">
+                                <button class="btn btn-primary" onclick="send_comment()">ارسال نظر</button>
+                            </div>
+                        </div>
+                                    
+                        
+                       
+                        
+                    </form>
+                </div>
+            </div>
+            <br>
+
+        {% else %}
+            <div class="alert alert-warning">
+                برای درج نظـر خود میبایست <a href="{% url 'account_modul:login' %}">لاگین</a> کنید
+            </div>
+        {% endif %}
+        
+        <script>
+
+            function send_comment(){
+                document.getElementById('comment').scrollIntoView({behavior:"smooth"});
+            }
+
+            function answers(parentId){
+                document.getElementById('parent_id').value = parentId
+                document.getElementById('answer_comment').scrollIntoView({behavior:"smooth"});
+
+            }
+        </script>
+    </div>
+
+    
+{% endblock %}
+
+

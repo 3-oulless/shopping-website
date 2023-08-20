@@ -1,0 +1,112 @@
+{% extends 'shared/_Layout.html' %}
+{% load static %}
+{% load jalali_tags %}
+{% load poll_extras %}
+{% load render_partial %}
+{% load thumbnail %}
+
+{% block title %}
+    <title>لیست مقالات</title>
+{% endblock %}
+
+
+{% block content %}
+    
+    <section id="" class="portfolio">
+        <div class="container">
+
+            <div class="row aos-init aos-animate" data-aos="fade-up">
+                {% render_partial 'Article_Module.views.grouping_article_component' %} 
+            </div>
+
+        
+            
+            <div style="direction: rtl !important;" class="row">
+                {% for article in Articles %}
+                    {% include 'include/article_item_component.html' with article=article %}
+                {% endfor %}
+            </div>
+            </div>
+
+
+            <nav aria-label="Page navigation example" class="mt-5">
+                <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">قبلی</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }} ... {{ page_obj.paginator.num_pages }}</a></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">بعدی</a></li>
+                {% endif %}
+                </ul>
+            </nav>
+
+        </div>
+    </section>
+    
+{% endblock %}
+
+
+
+
+
+
+<section>
+    <div class="container">
+
+
+        
+
+        <div class="row">
+            
+            <div class="col-sm-9">
+                <div class="blog-post-area">
+                    <h2 class="title text-center">مقالات</h2>
+
+                    {% for article in Articles %}
+                        <div class="single-blog-post">
+                            <h3>{{article.title}}</h3>
+                            <div class="post-meta">
+                                <ul>
+                                    <li><i class="fa fa-user"></i>{{article.author}}</li>
+                                    <li><i class="fa fa-clock-o"></i> {{ article.date_create|jalali_date}}</li>
+                                    <li><i class="fa fa-calendar"></i> {{ article.date_create|to_jalali:'%H:%M:%S'}}</li>
+                                </ul>
+                                <span>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                </span>
+                            </div>
+
+
+                            {% thumbnail article.image "862x398" quality=100 crop="center" as im %}
+                                <img src="{{ im.url }}">
+                            {% endthumbnail %}
+
+                            <br>
+                            <br>
+
+
+                            <p>{{article.short_description}}</p>
+                            <a  class="btn btn-primary" href="{{article.get_absolute_url}}">ادامـه مطلب</a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    {% render_partial 'Article_Module.views.grouping_article_component' %} 
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    
+</section>

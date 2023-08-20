@@ -1,0 +1,23 @@
+{% load static %}
+{% load jalali_tags %}
+{% load poll_extras %}
+{% load thumbnail %}
+
+<div class="col-lg-4 col-md-6">
+    <div class="col-12">
+      <div class="card" style="width: 18rem; border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(96, 96, 96, 0.5);">
+        
+        {% thumbnail data.employee_image "862x398" quality=100 as im %}
+            <img src="{{ im.url }}" height="250px">
+        {% endthumbnail %}
+
+
+        <div class="card-body">
+            <p>نام و نام خانوادگی<span> : </span>{{data.employee_name}}</p>
+            <p>سِمَت<span> : </span>{{data.employee_position}}</p>
+            <p>سال شروع به کار<span> : </span>{{data.employee_recruitment_date|jalali_date}}</p>
+        </div>
+      </div>
+    </div>
+    <br>                    
+</div>

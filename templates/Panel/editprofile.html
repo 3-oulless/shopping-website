@@ -1,0 +1,142 @@
+{% extends 'shared/_Layout.html' %}
+{% load render_partial %}
+{% load static %}
+
+{% block title %}
+    <title>تغییر اطلاعات</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container d-flex justify-content-center mt-lg-5" style="direction: rtl !important;">
+        <div class="row">
+            
+            <div class="col-md-4">
+                
+              
+                {% render_partial 'User_Panel_Modul.views.componnent_list_group' %}
+            </div>  
+
+            <div class="col-md-8 pull-right" style="direction: rtl !important;">
+                <form action="{% url 'panel:user_panel_edit' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                        <br>
+                        <div class="row">
+                            <div class="col-md-8 mt-lg-5">
+                                
+                                {{form_edit.avatar.label}}
+                                {{form_edit.avatar}}
+                                {{form_edit.errors.avatar}}
+
+                                
+                            </div>
+                            
+                            <br>
+
+                            <div class="col-md-4">
+                                <br>
+                                {% if request.user.avatar %}
+                                    <img src="{{request.user.avatar.url}}" alt="" style="width:80%; border-radius: 50% !important;">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.first_name.label}} <span> : </span>
+                                {{form_edit.first_name}}
+                                {{form_edit.errors.first_name}}
+                            </div>
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.last_name.label}} <span> : </span>
+                                {{form_edit.last_name}}
+                                {{form_edit.errors.last_name}}
+                            </div>
+
+                        </div>
+                        <br>
+
+                        {{form_edit.about_user.label}} <span> : </span>
+                        {{form_edit.about_user}}
+                        {{form_edit.errors.about_user}}
+
+                        <br>
+
+                        {{form_edit.address.label}} <span> : </span>
+                        {{form_edit.address}}
+                        {{form_edit.errors.address}}
+
+                        <br>
+
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.postalـcode.label}} <span> : </span>
+                                {{form_edit.postalـcode}}
+                                {{form_edit.errors.postalـcode}}
+                            </div>
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.phone.label}} <span> : </span>
+                                {{form_edit.phone}}
+                                {{form_edit.errors.phone}}
+                            </div>
+
+                        </div>
+                        <br>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.instagram_account.label}} <span> : </span>
+                                {{form_edit.instagram_account}}
+                                {{form_edit.errors.instagram_account}}
+                            </div>
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.twitter_account.label}} <span> : </span>
+                                {{form_edit.twitter_account}}
+                                {{form_edit.errors.twitter_account}}
+                            </div>
+
+                        </div>
+                        <br>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.facbook_account.label}} <span> : </span>
+                                {{form_edit.facbook_account}}
+                                {{form_edit.errors.facbook_account}}
+                            </div>
+
+                            <div class="col-md-6">
+                                <br>
+                                {{form_edit.linkedin_account.label}} <span> : </span>
+                                {{form_edit.linkedin_account}}
+                                {{form_edit.errors.linkedin_account}}
+                            </div>
+
+                        </div>
+
+                    <br>
+                    <button class="btn btn-success form-control">ذخیره</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+{% endblock %}

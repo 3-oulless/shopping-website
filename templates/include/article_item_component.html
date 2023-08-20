@@ -1,0 +1,37 @@
+{% load thumbnail %}
+{% load jalali_tags %}
+{% load poll_extras %}
+
+
+<div class="col-lg-6 col-md-12 mb-5">
+    <div class="col-12" style="height: 500px !important;">
+      <div class="card" style="border-radius: 15px 15px 0 0; box-shadow: -2px 3px 25px -14px rgba(96, 96, 96, 0.5);">
+        {% if article.image %}
+          
+            {% thumbnail article.image "862x398" quality=100 crop="center" as im %}
+                <a href="{{article.get_absolute_url}}"><img src="{{im.url}}" class="card-img-top" alt="..." style="border-radius: 15px 15px 0 0 !important;height: 250px;"></a>
+            {% endthumbnail %}
+        {% else %}
+          <a href="{{article.get_absolute_url}}"><img src="" class="card-img-top" alt="..." style="border-radius: 15px 15px 0 0 !important;height: 250px;"></a>
+        {% endif %}
+          
+
+
+        <div class="card-body">
+            <h3>{{article.title}}</h3>
+            
+            {% if article.visit_count == None %}
+              
+              <p><i class="bx bx-user " style="color: chocolate;"></i>{{article.author}}<span>  </span><i class="bx bx-calendar" style="color: chocolate;"></i> {{ article.date_create|jalali_date}}<span>  </span><i class="bx bx-alarm" style="color: chocolate;"></i>{{ article.date_create|to_jalali:'%H:%M:%S'}} <i class='bx bx-show-alt' style="color: chocolate;"></i><span>  </span> 0 </p>
+            {% else %}
+              <p><i class="bx bx-user " style="color: chocolate;"></i>{{article.author}}<span>  </span><i class="bx bx-calendar" style="color: chocolate;"></i> {{ article.date_create|jalali_date}}<span>  </span><i class="bx bx-alarm" style="color: chocolate;"></i>{{ article.date_create|to_jalali:'%H:%M:%S'}} <i class='bx bx-show-alt' style="color: chocolate;"></i><span>  </span> {{article.visit_count}} </p>
+            {% endif %}
+
+            
+
+            <p>{{article.short_description}}</p>
+        </div>
+      </div>
+    </div>
+    <br>                    
+</div>

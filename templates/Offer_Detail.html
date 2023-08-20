@@ -1,0 +1,355 @@
+{% extends 'shared/_Layout.html' %}
+{% load static %}
+{% load jformat %}
+
+{% block css_custome %}
+    <style>
+        .im{
+            width: 250px;
+            height: 250px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% for i in offer %}
+    <div id="offer" class="col-10 mt-2">
+        <div >
+            <div class="row">
+            <div class="col-lg-12 container row" > 
+                <div class="col-md-4">
+                <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+
+                    <div class="carousel-item active"> 
+                        {% if i.offer_image.Image %}
+                            <img src="{{i.offer_image.Image.url }}" class="d-block w-100 im" alt="...">
+                        {% else %}
+                            <img src="" class="d-block w-100 im" alt="...">
+                        {% endif %}
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1>Offer Image</h1>
+                            <h4>The image inside the offer image model</h4>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item"> 
+                        {% if i.image %}
+                            <img src="{{i.image.url }}" class="d-block w-100 im" alt="...">
+                        {% else %}
+                            <img src="" class="d-block w-100 im" alt="...">
+                        {% endif %}
+                        
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1>Offer</h1>
+                            <h4>The image inside the offer model</h4>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item"> 
+                        {% if i.offer.image %}
+                            <img src="{{i.offer.image.url}}" class="d-block w-100 im" alt="...">
+                        {% else %}
+                            <img src="" class="d-block w-100 im" alt="...">
+                        {% endif %}
+                        
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1>Offer Template</h5>
+                            <h4>The image inside the offer template model</h4>
+                        </div>
+                    </div>
+
+                    </div> 
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev"> <span  aria-hidden="true"></span> <span class="visually-hidden">Previous</span> </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next"> <span  aria-hidden="true"></span> <span class="visually-hidden">Next</span> </button>
+                </div>
+                </div>
+                
+                <div class="col-md-4 " style="direction: rtl;">
+                <div class="card-body">
+                <p><span><b>آدرس تصویر </b></span><a href="{{i.image_url}}">{{i.image_url}}</a></p>
+                <p><span><b>آدرس لوگو کسب کار </b></span><a href="{{i.BLogo_url}}">{{i.BLogo_url}}</a></p>
+                <p><span><b>ای دی تی </b></span>{{i.temeID}}</p>
+                <p><span><b>آی دی چالش </b></span>{{i.Challenge_id}}</p>
+                <p><span><b>نام دسته بندی </b></span>{{i.classification.title_fa}}</p>
+                </div>
+                </div>
+
+                <div class="col-md-4 " style="direction: rtl;">
+                <div class="card-body">
+                    <p><span><b>عنوان  </b></span>{{i.title}}</p>
+                    <p><span><b>سازنده </b></span>{{i.owner.name}}</p>
+                    <p><span><b>آیدی آفر </b></span>{{i.id}}</p>
+                    <p><span><b>عنوان در template </b></span>{{i.offer.title_fa}}</p>
+                    <p><span><b>اسلاگ </b></span>{{i.offer.slug}}</p>
+                    <p><span><b>آدرس لندینگ پیج </b></span><a href="{{i.landingPage}}">{{i.landingPage}}</a></p>
+                </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+        <br>
+        <div class="card-body" style="direction: rtl;">
+            <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+            <li class="nav-item flex-fill" role="presentation"> <button class="nav-link w-100" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="false" tabindex="-1">قوانین</button></li>
+            <li class="nav-item flex-fill" role="presentation"> <button class="nav-link w-100 active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="true">سوالات</button></li>
+            <li class="nav-item flex-fill" role="presentation"> <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">بازرسی</button></li>
+            <li class="nav-item flex-fill" role="presentation"> <button class="nav-link w-100" id="more-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-more" type="button" role="tab" aria-controls="more" aria-selected="false" tabindex="-1">بیشتر</button></li>
+            </ul>
+            <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+
+            <div class="tab-pane fade" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab"> 
+                <ul>
+                    <li><h5 class="card-text text-secondary fs-5">توضیحات شرایط و قوانین : <span class="text-dark fs-6">{{i.rules_1}}</span></h5></li>
+                    <li><h5 class="card-text text-secondary fs-5">متن کوتاه : <span class="text-dark fs-6">{{i.landingPageShortText}}</span></h5></li>
+                    <li><h5 class="card-text text-secondary fs-5">متن بلند : <span class="text-dark fs-6">{{i.landingPageLargeText}}</span></h5></li>
+                    <li><h5 class="card-text text-secondary fs-5">پیام نهایی : <span class="text-dark fs-6">{{i.finalMessage|safe}}</span></h5></li>
+                    <li><h5 class="card-text text-secondary fs-5">پیام پیروزی : <span class="text-dark fs-6">{{i.victoryMessage|safe}}</span></h5></li>
+                    <li><h5 class="card-text text-secondary fs-5">پیام شکست : <span class="text-dark fs-6">{{i.losingMessage|safe}}</span></h5></li>
+                    <li><h5 class="card-text text-secondary fs-5">حداقل محدودیت سنی : <span class="text-dark fs-6">{{i.Min_age_limit}}</span></h5></li>
+                    <li><h5 class="card-text text-secondary fs-5">حداکثر محدودیت سنی : <span class="text-dark fs-6">{{i.Max_age_limit}}</span></h5></li>
+                </ul>
+            </div>
+
+
+            <div class="tab-pane fade active show" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab"> 
+                {% for key, value in chalanges.items %}
+
+                {% if key == "MQ05y01m09d21" %}
+                  
+                        <i class="zmdi zmdi-star"></i><span>چند سوال بپرسید</span></i>
+                              <ul>
+                                    {% for i in questions_all %}
+                                      {% if i.answer3 != None %}
+                                        <li><h5 class="card-text text-secondary fs-6"> سوال : <span class="text-dark fs-6">{{i.question}}</span> : <span class="text-success">{{i.answer1}} - </span><span class="text-danger">{{i.answer2}} - {{i.answer3}}</span></h5></li>
+                                      {% elif i.answer4 != None %}
+                                        <li><h5 class="card-text text-secondary fs-6"> سوال : <span class="text-dark fs-6">{{i.question}}</span> : <span class="text-success">{{i.answer1}} - </span><span class="text-danger">{{i.answer2}} - {{i.answer3}} - {{i.answer4}}</span></h5></li>
+                                      {% else %}
+                                        <li><h5 class="card-text text-secondary fs-6"> سوال : <span class="text-dark fs-6">{{i.question}}</span> : <span class="text-success">{{i.answer1}} - </span><span class="text-danger">{{i.answer2}}</span></h5></li>
+                                      {% endif %}
+                                    {% endfor %}
+                                
+                              </ul>
+
+
+                {% elif key == "Q01y01m02d18" %}
+                  
+                        <i class="zmdi zmdi-star"></i><span>تک سوالی</span></i>
+                              <ul>
+                                
+                                    <li><h5 class="card-text text-secondary fs-6"> ارائه جزئیات : <span class="text-dark fs-6">{{value.offer_detail.title}}</span></h5></li>
+                                    <li><h5 class="card-text text-secondary fs-6"> سوال : <span class="text-dark fs-6">{{value.question}}</span></h5></li>
+                                    <li><h5 class="card-text text-secondary fs-6"> پاسخ : <span class="text-dark fs-6">{{value.answer}}</span></h5></li>
+                                    <li><h5 class="card-text text-secondary fs-6"> آدرس وب : <span class="text-dark fs-6">{{value.web_address}}</span></h5></li>
+                                    <li><h5 class="card-text text-secondary fs-6"> شبکه اجتماعی : <span class="text-dark fs-6">{{value.social_network}}</span></h5></li>
+                                    <li><h5 class="card-text text-secondary fs-6"> آدرس فروشگاه : <span class="text-dark fs-6">{{value.shop_address}}</span></h5></li>
+                                    <li><h5 class="card-text text-secondary fs-6"> پاسخ نادرست : <span class="text-dark fs-6">{{value.False_answer}}</span></h5></li>
+                                    <li><h5 class="card-text text-secondary fs-6"> پاسخ درست : <span class="text-dark fs-6">{{value.True_answer}}</span></h5></li>
+                                
+                              </ul>
+      
+                {% elif key == "R03y01m03d04" %}
+                  
+                        <i class="zmdi zmdi-star"></i><span>گردونه شانس</span></i>
+                              <ul>
+                                <li><h5 class="card-text text-secondary fs-6"> ارائه جزئیات : <span class="text-dark fs-6">{{value.offer_detail.title}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> آدرس وب : <span class="text-dark fs-6">{{value.web_address}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> شبکه اجتماعی : <span class="text-dark fs-6">{{value.social_network}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> آدرس فروشگاه : <span class="text-dark fs-6">{{value.shop_address}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> پاسخ نادرست : <span class="text-dark fs-6">{{value.False_answer}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> پاسخ درست : <span class="text-dark fs-6">{{value.True_answer}}</span></h5></li>
+                              </ul>
+      
+      
+                {% elif key == "S02y01m02d018" %}
+                  
+                        <i class="zmdi zmdi-star"></i><span>کد مخفی</span></i>
+                      
+                              <ul>
+                                <li><h5 class="card-text text-secondary fs-6"> ارائه جزئیات : <span class="text-dark fs-6">{{value.offer_detail.title}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> عدد : <span class="text-dark fs-6">{{value.number}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> آدرس وب : <span class="text-dark fs-6">{{value.web_address}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> شبکه اجتماعی : <span class="text-dark fs-6">{{value.social_network}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> آدرس فروشگاه : <span class="text-dark fs-6">{{value.shop_address}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> پاسخ نادرست : <span class="text-dark fs-6">{{value.False_answer}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6"> پاسخ درست : <span class="text-dark fs-6">{{value.True_answer}}</span></h5></li>
+                              </ul>
+                {% elif key == "RE05y01m06d12" %}
+                  
+                  <i class="zmdi zmdi-star"></i><span>referralOfferDetail</span></i>
+                              
+                        <ul>
+                          <li><h5 class="card-text text-secondary fs-6"> ارائه جزئیات : <span class="text-dark fs-6">{{value.offer_detail.title}}</span></h5></li>
+                          <li><h5 class="card-text text-secondary fs-6"> عدد : <span class="text-dark fs-6">{{value.number}}</span></h5></li>
+                          <li><h5 class="card-text text-secondary fs-6"> آدرس وب : <span class="text-dark fs-6">{{value.web_address}}</span></h5></li>
+                          <li><h5 class="card-text text-secondary fs-6"> شبکه اجتماعی : <span class="text-dark fs-6">{{value.social_network}}</span></h5></li>
+                          <li><h5 class="card-text text-secondary fs-6"> آدرس فروشگاه : <span class="text-dark fs-6">{{value.shop_address}}</span></h5></li>
+                          <li><h5 class="card-text text-secondary fs-6"> پاسخ نادرست : <span class="text-dark fs-6">{{value.False_answer}}</span></h5></li>
+                          <li><h5 class="card-text text-secondary fs-6"> پاسخ درست : <span class="text-dark fs-6">{{value.True_answer}}</span></h5></li>
+                        </ul>
+            
+                {% elif key == "my11y01m10d02" %}
+                  
+                  <i class="zmdi zmdi-star"></i><span>معمایی</span></i>
+
+                        <div class="col-12">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <ul>
+                                <li><h5 class="card-text text-secondary fs-6"> نوشته کمکی : <span class="text-dark fs-6">{{value.help_text}}</span></h5></li>
+                                <li><h5 class="card-text text-secondary fs-6">پاسخ : <span class="text-dark fs-6">{{value.answer}}</span></h5></li>
+                                {% if value.TimeLimit %}
+                                  <li><h5 class="card-text text-secondary fs-6">محدودیت زمانی : <span class="text-dark fs-6">✔</span></h5></li>
+                                  <li><h5 class="card-text text-secondary fs-6">زمان مشخص شده (دقیقه) : <span class="text-dark fs-6">{{value.Time}}</span></h5></li>
+                                {% else %}
+                                  <li><h5 class="card-text text-secondary fs-6">محدودیت زمانی : <span class="text-dark fs-6">✖</span></h5></li>
+                                {% endif %}
+                              </ul>
+                            </div>
+
+
+
+                            <div class="col-md-4">
+                            
+                              <div id="carouselExampleFade1" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+            
+                                <div class="carousel-item active"> 
+                                    {% if value.mystery_image1 %}
+                                        <img src="{{value.mystery_image1.url }}" class="d-block w-100 im" alt="...">
+                                    {% else %}
+                                        <img src="" class="d-block w-100 im" alt="...">
+                                    {% endif %}
+
+                                    <div class="carousel-caption d-none d-md-block">
+                                      <h6>Image 1</h6>
+                                    </div>
+                                </div>
+            
+                                <div class="carousel-item"> 
+                                    {% if value.mystery_image2 %}
+                                        <img src="{{value.mystery_image2.url }}" class="d-block w-100 im" alt="...">
+                                    {% else %}
+                                        <img src="" class="d-block w-100 im" alt="...">
+                                    {% endif %}
+                                    <div class="carousel-caption d-none d-md-block">
+                                      <h6>Image 2</h6>
+                                    </div>
+                                </div>
+            
+                                <div class="carousel-item"> 
+                                    {% if value.mystery_image3 %}
+                                        <img src="{{value.mystery_image3.url}}" class="d-block w-100 im" alt="...">
+                                    {% else %}
+                                        <img src="" class="d-block w-100 im" alt="...">
+                                    {% endif %}
+                                    <div class="carousel-caption d-none d-md-block">
+                                      <h6>Image 3</h6>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item"> 
+                                  {% if value.mystery_image4 %}
+                                      <img src="{{value.mystery_image4.url}}" class="d-block w-100 im" alt="...">
+                                  {% else %}
+                                      <img src="" class="d-block w-100 im" alt="...">
+                                  {% endif %}
+                                  <div class="carousel-caption d-none d-md-block">
+                                    <h6>Image 4</h6>
+                                  </div>
+                              </div>
+            
+                                </div> 
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="prev"> <span  aria-hidden="true"></span> <span class="visually-hidden">Previous</span> </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade1" data-bs-slide="next"> <span  aria-hidden="true"></span> <span class="visually-hidden">Next</span> </button>
+                            </div>
+
+                            </div>
+                          </div>
+                        </div>
+      
+                {%endif%}
+              {% endfor %}
+            </div>
+
+
+            <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab"> 
+                <div class="row">
+                    <div class="col-12">
+                        
+                            <div class="col-12">
+                                <ul>
+                                    {% for g in gift %}
+                                      <div class="col-2">
+                                        <li><h5 class="card-text text-secondary fs-6"> نام هدیه : <span class="text-dark fs-6">{{g.name}}</span></h5></li>
+                                        <li><h5 class="card-text text-secondary fs-6"> عدد : <span class="text-dark fs-6">{{g.number}}</span></h5></li>
+                                        <li><h5 class="card-text text-secondary fs-6"> تخفیف : <span class="text-dark fs-6">{{g.discount}}</span></h5></li>
+                                        <li><h5 class="card-text text-secondary fs-6"> برآورد کردن : <span class="text-dark fs-6">{{g.estimation}}</span></h5></li>
+                                        <li><h5 class="card-text text-secondary fs-6"> شانس دور : <span class="text-dark fs-6">{{g.round_chance}}</span></h5></li>
+                                        <li><h5 class="card-text text-secondary fs-6"> کد تخفیف : <span class="text-dark fs-6">{{g.discount_code}}</span></h5></li>
+                                      </div>
+                                    <hr class="w-25">
+                                    {% endfor %}
+                                </ul>
+                            </div>
+        
+                            <div class="col-6">
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li><h5 class="card-text text-secondary fs-6">تاریخ ایجاد : <span class="text-dark fs-6">{{i.create_date|jformat:"%A %d %B %Y %H:%M"}}</span></h5></li>
+                      </ul>
+  
+  
+                      <ul>
+                        <li><h5 class="card-text text-secondary fs-6">تاریخ شروع : <span class="text-dark fs-6">{{i.start_date|jformat:"%A %d %B %Y %H:%M"}}</span></h5></li>
+                      </ul>
+  
+  
+                      <ul>
+                        <li><h5 class="card-text text-secondary fs-6">تاریخ پایان : <span class="text-dark fs-6">{{i.end_date|jformat:"%A %d %B %Y %H:%M"}}</span></h5></li>
+                      </ul>
+  
+                  <div class="accordion-body bor" style="width: 260px">
+                      <form method="post">
+                        {% csrf_token %}
+                        
+                          {% if i.finall_check == True %}
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" value="True" id="True" name="flexRadio" checked>
+                              <label class="form-check-label" for="True">چک شده</label>
+                            </div>
+          
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" value="False" id="False" name="flexRadio">
+                              <label class="form-check-label" for="False">غیر فعال شدن کمپین</label>
+                            </div> 
+                          {% else %}
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" value="True" id="True" name="flexRadio">
+                              <label class="form-check-label" for="True">چک شده</label>
+                            </div>
+          
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" value="False" id="False" name="flexRadio" checked>
+                              <label class="form-check-label" for="False">غیر فعال شدن کمپین</label>
+                            </div>                   
+                          {% endif %}
+                          <p></p>
+                          <button class="btn btn-primary">تایید</button>
+                      </form>
+                  </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="bordered-justified-more" role="tabpanel" aria-labelledby="more-tab"> Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.</div>
+
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

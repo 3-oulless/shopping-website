@@ -1,0 +1,7 @@
+
+ <ul class="list-group text-center">
+    <li class="list-group-item"><a href="{% url 'panel:user_panel' %}" style="{% if request.resolver_match.url_name == 'user_panel' %} color: purple; {% endif %}">پنل کاربری</a></li>
+    <li class="list-group-item"><a href="{% url 'panel:user_panel_edit' %}" style="{% if request.resolver_match.url_name == 'user_panel_edit' %} color: purple; {% endif %}">ویرایش اطلاعات</a></li>
+    <li class="list-group-item"><a href="{% url 'panel:order' %}" style="{% if request.resolver_match.url_name == 'order' %} color: purple; {% endif %}">سفارشات</a></li>
+    <li class="list-group-item"><a href="{% url 'panel:edit_password' %}" style="{% if request.resolver_match.url_name == 'edit_password' %} color: purple; {% endif %}">تغییر رمز</a></li>
+</ul>
